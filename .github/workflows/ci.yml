@@ -1,0 +1,15 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint shell scripts
+        run: |
+          brew install shellcheck
+          shellcheck -S warning build.sh install.sh uninstall.sh scripts/*.sh
+      - name: Build app
+        run: ./build.sh
