@@ -10,8 +10,13 @@ LANG_PREF=$(defaults read "$BUNDLE_ID" language 2>/dev/null || echo en)
 
 IN=$(cat)
 case "$LANG_PREF" in
-  zh*) TITLE="Claude Code 需要确认"; DEFAULT_MSG="需要你的确认"; UNKNOWN="未知"; EXT="插件" ;;
-  *)   TITLE="Claude Code needs your attention"; DEFAULT_MSG="Waiting for your input"; UNKNOWN="unknown"; EXT="extension" ;;
+  zh*) T_CONFIRM="Claude Code 需要确认"; T_IDLE="Claude Code 等待输入"; DEFAULT_MSG="需要你的确认"; UNKNOWN="未知"; EXT="插件" ;;
+  *)   T_CONFIRM="Claude Code needs your attention"; T_IDLE="Claude Code is waiting for input"; DEFAULT_MSG="Waiting for your input"; UNKNOWN="unknown"; EXT="extension" ;;
+esac
+# idle_prompt = finished and waiting for input; everything else (permission prompts etc.) needs a decision.
+case "$(printf '%s' "$IN" | jq -r '.notification_type // ""')" in
+  idle_prompt) TITLE="$T_IDLE" ;;
+  *)           TITLE="$T_CONFIRM" ;;
 esac
 MSG=$(printf '%s' "$IN" | jq -r --arg d "$DEFAULT_MSG" '.message // $d' | tr '\n' ' ')
 CWD=$(printf '%s' "$IN" | jq -r '.cwd // ""')

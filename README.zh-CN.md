@@ -19,6 +19,8 @@
 | Terminal.app | 按 tty 切到对应 tab（测试较少） |
 | 其他（Warp、Ghostty 等） | 激活该应用 |
 
+通知标题区分两种情况：需要你确认权限或做决定时显示 **「Claude Code 需要确认」**，回完话等你输入时显示 **「Claude Code 等待输入」**。
+
 通知副标题格式：`📂 <目录> · <应用>`，例如 `📂 ~/my-project · iTerm Hotkey`。
 
 ## 环境要求
@@ -97,6 +99,7 @@ ClaudeNotify.app（Swift，UserNotifications）
 ```
 src/main.swift        ClaudeNotify.app 源码
 src/Info.plist        bundle id io.github.moozeeli.claude-notify，LSUIElement（不显示 Dock 图标）
+assets/AppIcon.icns   应用图标（用 assets/make_icon.swift 重新生成）
 scripts/notify.sh     Claude Code Notification hook
 scripts/focus.sh      按目标文件执行跳转
 build.sh              编译到 build/ClaudeNotify.app

@@ -19,6 +19,8 @@ Running several Claude Code sessions across iTerm2 tabs, a hotkey window and VS 
 | Terminal.app | Selects the tab by tty (less tested) |
 | Anything else (Warp, Ghostty, …) | Activates the app |
 
+Notification title tells you what Claude needs: **"Claude Code needs your attention"** for permission prompts and other decisions, **"Claude Code is waiting for input"** when it has finished and is idle.
+
 Notification subtitle format: `📂 <directory> · <app>`, e.g. `📂 ~/my-project · iTerm Hotkey`.
 
 ## Requirements
@@ -97,6 +99,7 @@ Design notes:
 ```
 src/main.swift        ClaudeNotify.app source
 src/Info.plist        bundle id io.github.moozeeli.claude-notify, LSUIElement (no Dock icon)
+assets/AppIcon.icns   App icon (regenerate with assets/make_icon.swift)
 scripts/notify.sh     Claude Code Notification hook
 scripts/focus.sh      Performs the jump for a target file
 build.sh              Builds build/ClaudeNotify.app
